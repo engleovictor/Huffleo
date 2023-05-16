@@ -14,5 +14,6 @@ typedef struct string_info {
 char *stringFromFile(char *filename);
 String_Info *returnInfo(char *caracs);
 int retirarChar(int *tam, char *frase, char val);
+void freeString_Info(String_Info **si);
 
 #endif // __DESCOBRIDOR_DE_FREQUECIA_H__

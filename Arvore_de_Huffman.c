@@ -67,15 +67,16 @@ Arvore_de_Huffman *montarArvComSimFreq(int tam, char *simbolos, int *vals) {
         juntarMenores(allNos,&tam0,j++);
     }
 
-    Arvore_de_Huffman *aux = (Arvore_de_Huffman *) malloc(sizeof(Arvore_de_Huffman));
-
-    aux->dir     = allNos[0]->dir;
-    aux->esq     = allNos[0]->esq;
-    aux->freq    = allNos[0]->freq;
-    aux->simbolo = allNos[0]->simbolo;
-    aux->e_folha = 0;
+    //Arvore_de_Huffman *aux = (Arvore_de_Huffman *) malloc(sizeof(Arvore_de_Huffman));
     
-    // for(int i=0;i<tam;i++) free(allNos[i]);
+    Arvore_de_Huffman *aux = allNos[0];
+
+    // aux->dir     = allNos[0]->dir;
+    // aux->esq     = allNos[0]->esq;
+    // aux->freq    = allNos[0]->freq;
+    // aux->simbolo = allNos[0]->simbolo;
+    // aux->e_folha = 0;
+    
     free(allNos);
 
     return aux;
@@ -97,11 +98,21 @@ void printSimetric(Arvore_de_Huffman *T) {
     }
 }
 
+void freePosOrdem(Arvore_de_Huffman *T) {
+    if(T) {
+        freePosOrdem(T->esq);
+        freePosOrdem(T->dir);
+        free(T->simbolo);
+        free(T);
+    }
+}
+
 void criarDict(Arvore_de_Huffman *T, Dicionario **dict) {
     char *buff = (char *) malloc(sizeof(char)*LOG_QNT_SIMB);
     buff[0] = '\0';
     int p = 0;
     criarAbsDict(T,buff,1,dict,&p);
+    free(buff);
 }
 
 void criarAbsDict(Arvore_de_Huffman *T, char *buff, int tam, Dicionario **dict, int *index) {

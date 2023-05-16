@@ -24,9 +24,20 @@ int main(int argc,char *argv[]) {
     
     char *myNewStr = stringFromFile(argv[1]);
     long unsigned int tamanho = (long unsigned int) strlen(myNewStr);
+
     // A principio, pro trabalho queremos mandar uma string pro companheiro;
     for(long unsigned int i=0;i<tamanho;i++) {
         printf("%s",dict[func_map(myNewStr[i],dict)]->repres);
     } printf("\n");
+
+    // Free de tudo:
+    for(int i=0;i<new->qnt;i++) free(dict[i]->repres);
+    for(int i=0;i<new->qnt;i++) free(dict[i]);
+    free(dict);
+    freePosOrdem(T);
+    freeString_Info(&new);
+    free(myStr);
+    free(myNewStr);
+
     return 0;
 }

@@ -25,7 +25,6 @@ char *stringFromFile(char *filename) {
         now[allRead+readQnt] = '\0';
         free(returnStr);
         returnStr = now;
-        
         allRead += readQnt;
     }
 
@@ -65,4 +64,10 @@ int retirarChar(int *tam, char *frase, char val) {
         frase[--(*tam)] = '\0';
         return 1;
     } else return 0;
+}
+
+void freeString_Info(String_Info **si) {
+    free((*si)->caracs);
+    free((*si)->vals);
+    free(*si);
 }
