@@ -1,3 +1,0 @@
-preordem:a, no8, M, no0, m, no4, p, no12, e, no9, d, no5, s, no14, r, no2, b, no7, u, no1, j, no10, i, no3, t, no6, l, no13, o, no11,  , 
-simetrica:no14, no12, no8, a, no4, no0, M, m, p, no9, e, no5, d, s, no13, no10, no7, no2, r, b, no1, u, j, no6, no3, i, t, l, no11, o,  , 
-001000001011011010100101011101110111010100110001111101110011100001101000110110100010100011101101101110111010100101110011010
