@@ -50,7 +50,6 @@ void juntarMenores(Arvore_de_Huffman **allNos, int *tam, int val) {
     Arvore_de_Huffman *aux = newNoNaoSimbolo(val,allNos[menorFreqIndice0],allNos[menorFreqIndice1]);
     allNos[menorFreqIndice0] = aux;
     allNos[menorFreqIndice1] = allNos[(*tam)-1];
-    //free(allNos[(*tam)--]);
     (*tam)--;
 }
 
@@ -59,26 +58,14 @@ Arvore_de_Huffman *montarArvComSimFreq(int tam, char *simbolos, int *vals) {
     Arvore_de_Huffman **allNos = (Arvore_de_Huffman **) malloc(sizeof(Arvore_de_Huffman *)*tam);
     for(int i=0;i<tam;i++) allNos[i] = newNoSimbolo(vals[i], simbolos[i]);
     
-
-    int j=0;
-    
+    int j=0;    
     while(1) {
         if(tam0 == 1) break;
-        juntarMenores(allNos,&tam0,j++);
+        juntarMenores(allNos,&tam0,j++); ///
     }
 
-    //Arvore_de_Huffman *aux = (Arvore_de_Huffman *) malloc(sizeof(Arvore_de_Huffman));
-    
     Arvore_de_Huffman *aux = allNos[0];
-
-    // aux->dir     = allNos[0]->dir;
-    // aux->esq     = allNos[0]->esq;
-    // aux->freq    = allNos[0]->freq;
-    // aux->simbolo = allNos[0]->simbolo;
-    // aux->e_folha = 0;
-    
     free(allNos);
-
     return aux;
 }
 
@@ -118,7 +105,6 @@ void criarDict(Arvore_de_Huffman *T, Dicionario **dict) {
 void criarAbsDict(Arvore_de_Huffman *T, char *buff, int tam, Dicionario **dict, int *index) {
     // A principio nunca vamos ter uma arvore que um NoX não tenha 2 filhos.
     if(T->e_folha) {
-        //printf("%s %s\n", T->simbolo, buff);
         dict[*index]->simbolo = T->simbolo[0];
         dict[*index]->repres = (char *) malloc(sizeof(char)*LOG_QNT_SIMB);
         strcpy(dict[(*index)++]->repres,buff);
@@ -140,4 +126,52 @@ int func_map(char val, Dicionario **dict) {
 
 void mostrarDict(int tam, Dicionario **dict) {
     for(int i = 0;i< tam;i++) printf("%c %s\n", dict[i]->simbolo, dict[i]->repres);
+}
+
+Arvore_de_Huffman *montarArvComSimFreq_hash(char *onlyOnceString, int *freqs) {
+    int tam0 = (int) strlen(onlyOnceString);
+    Arvore_de_Huffman **allNos = (Arvore_de_Huffman **) malloc(sizeof(Arvore_de_Huffman *)*tam0);
+    int j=0; 
+    
+    for(int i=0;i<256;i++) {
+        if(freqs[i]) {
+            allNos[j++] = newNoSimbolo(freqs[i], (char) i);
+        }
+    }
+
+    j=0;
+    while(1) {
+        if(tam0 == 1) break;
+        juntarMenores(allNos,&tam0,j++);
+    }
+
+    Arvore_de_Huffman *aux = allNos[0];
+    free(allNos);
+    return aux;
+}
+
+void gerarDict(Arvore_de_Huffman *T, char **dict) {
+    char *buff = (char *) malloc(sizeof(char)*LOG_QNT_SIMB);
+    buff[0] = '\0';
+    int p = 0;
+    gerarAbsDict(T,buff,1,dict,&p);
+    free(buff);
+}
+
+void attachValueToDict(char **dict, char val, char *repres) {
+    strcpy(dict[(int) val],repres);
+}
+
+void gerarAbsDict(Arvore_de_Huffman *T, char *buff, int tam, char **dict, int *index) {
+    // A principio nunca vamos ter uma arvore que um NoX não tenha 2 filhos.
+    if(T->e_folha) {
+        attachValueToDict(dict,T->simbolo[0],buff);
+    } else {
+        sprintf(buff,"%s0",buff);
+        gerarAbsDict(T->esq,buff,tam+1,dict,index);
+        buff[tam-1] = '\0';
+        sprintf(buff,"%s1",buff);
+        gerarAbsDict(T->dir,buff,tam+1,dict,index);
+        buff[tam-1] = '\0';
+    }
 }
