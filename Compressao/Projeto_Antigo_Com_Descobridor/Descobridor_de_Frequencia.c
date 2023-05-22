@@ -1,6 +1,6 @@
 #include "Descobridor_de_Frequencia.h"
 
-#define CARACS_SIZE 100
+#define CARACS_SIZE 256
 #define BUFFER_SIZE 1000
 
 

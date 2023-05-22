@@ -1,6 +1,6 @@
 #include "Hashing.h"
 
-#define LOG_QNT_SIMB 8
+#define LOG_QNT_SIMB 20
 #define BUFFER_SIZE 1000
 
 char *stringFromFile(char *filename) {

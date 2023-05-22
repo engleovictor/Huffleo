@@ -1,6 +1,6 @@
 #include "Arvore_de_Huffman.h"
 
-#define LOG_QNT_SIMB 8
+#define LOG_QNT_SIMB 20
 
 
 Arvore_de_Huffman *newNoSimbolo(int freq, char simbolo) {
